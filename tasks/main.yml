@@ -8,7 +8,7 @@
 
 - name: Set timezone variables
   copy: 
-    content: 'America/Los_Angeles'
+    content: "{{ timezone if timezone is defined else 'Etc/UTC' }}"
     dest: /etc/timezone
     owner: root
     group: root
