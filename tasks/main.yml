@@ -1,23 +1,4 @@
 ---
-- name: Install tzdata on Ubuntu if needed
-  apt:
-    name: ["tzdata"]
-    update_cache: yes
-  when:
-    - ansible_distribution == 'Ubuntu'
-
-- name: Set timezone variables
-  copy: 
-    content: "{{ timezone if timezone is defined else 'Etc/UTC' }}"
-    dest: /etc/timezone
-    owner: root
-    group: root
-    mode: "0644"
-  when:
-    - ansible_distribution == 'Ubuntu'
-  register: set_timezone
-
-- name: update timezone
-  command: dpkg-reconfigure --frontend noninteractive tzdata
-  when: 
-    - set_timezone is changed
+- name: Set timezone to Asia/Tokyo
+  timezone:
+    name: "{{ timezone if timezone is defined else 'Etc/UTC' }}"
