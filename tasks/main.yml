@@ -13,7 +13,11 @@
     owner: root
     group: root
     mode: "0644"
-  notify_now:
-    - update timezone
   when:
     - ansible_distribution == 'Ubuntu'
+  register: set_timezone
+
+- name: update timezone
+  command: dpkg-reconfigure --frontend noninteractive tzdata
+  when: 
+    - set_timezone is changed
